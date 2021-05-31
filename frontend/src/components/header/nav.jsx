@@ -2,7 +2,7 @@ import { isEmpty } from 'lodash'
 import Link from 'next/link'
 import { useState } from 'react'
 
-const Nav = ({ headerMenus }) => {
+const Nav = ({ header, headerMenus }) => {
 	if (isEmpty(headerMenus)) {
 		return null
 	}
@@ -16,7 +16,7 @@ const Nav = ({ headerMenus }) => {
 				<Link href="/">
 					<a>
 						<img
-							// src={header?.siteLogoUrl ?? '/images/site-logo.png'}
+							src={header?.siteLogoUrl ?? '/images/site-logo.png'}
 							alt="Site Logo"
 							width="48"
 							height="48"
@@ -25,8 +25,8 @@ const Nav = ({ headerMenus }) => {
 					</a>
 				</Link>
 				<div className="flex flex-col items-start justify-start">
-					{/* <span className="font-semibold text-xl tracking-tight">{header?.siteTitle}</span> */}
-					{/* <span>{header?.siteTagLine}</span> */}
+					<span className="font-semibold text-xl tracking-tight">{header?.siteTitle}</span>
+					<span>{header?.siteTagLine}</span>
 				</div>
 			</div>
 			<div className="block lg:hidden">

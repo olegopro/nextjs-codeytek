@@ -14,7 +14,12 @@ export async function getStaticProps(ctx) {
 	return {
 		props: {
 			data: {
-				menus: { headerMenus: data?.headerMenus?.edges, footerMenus: data?.footerMenus?.edges }
+				header: data?.header || [],
+				menus: {
+					headerMenus: data?.headerMenus?.edges,
+					footerMenus: data?.footerMenus?.edges
+				},
+				footer: data?.footer || []
 			}
 		},
 		revalidate: 1
