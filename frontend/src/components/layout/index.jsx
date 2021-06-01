@@ -1,9 +1,9 @@
-import Footer from '../footer'
-import Header from '../header'
-import Head from 'next/head'
-import Seo from '../seo'
 import { isEmpty } from 'lodash'
+import Head from 'next/head'
 import { sanitize } from '../../utils/DOMPurify'
+import Seo from '../seo'
+import Footer from './footer'
+import Header from './header'
 // import Link from 'next/link'
 
 const Layout = ({ data, children }) => {

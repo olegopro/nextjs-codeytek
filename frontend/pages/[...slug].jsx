@@ -6,7 +6,7 @@ import { useRouter } from 'next/router'
 import Layout from '../src/components/layout'
 import { isCustomPageUri } from '../src/utils/slugs'
 
-const Pages = ({ data }) => {
+const Page = ({ data }) => {
 	const router = useRouter()
 	if (router.isFallback) {
 		return <div>Loading...</div>
@@ -16,7 +16,7 @@ const Pages = ({ data }) => {
 	return <Layout data={data}>{router?.query?.slug.join('/')}</Layout>
 }
 
-export default Pages
+export default Page
 
 export async function getStaticProps({ params }) {
 	const { data } = await client.query({

@@ -30,6 +30,7 @@ const Nav = ({ header, headerMenus }) => {
 			</div>
 			<div className="block lg:hidden">
 				<button
+					// @ts-ignore
 					onClick={() => setMenuVisibility(!isMenuVisible)}
 					className="flex items-center px-3 py-2 border rounded text-teal-200 border-teal-400 hover:text-white hover:border-white"
 					data-cy="mmenu-btn"
@@ -50,8 +51,8 @@ const Nav = ({ header, headerMenus }) => {
 						{headerMenus?.map(menu => (
 							<Link key={menu?.node?.id} href={menu?.node?.path}>
 								<a
-									className="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4"
 									data-cy="nav-item"
+									className="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4"
 								>
 									{menu?.node?.label}
 								</a>

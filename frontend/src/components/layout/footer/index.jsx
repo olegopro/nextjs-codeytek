@@ -1,7 +1,7 @@
 import { isEmpty, isArray } from 'lodash'
 import Link from 'next/link'
-import { sanitize } from '../../utils/DOMPurify'
-import { getIconComponentByName } from '../../utils/icons-map'
+import { sanitize } from '../../../utils/DOMPurify'
+import { getIconComponentByName } from '../../../utils/icons-map'
 
 const Footer = ({ footer, footerMenus }) => {
 	if (isEmpty(footerMenus) || !isArray(footerMenus)) {
