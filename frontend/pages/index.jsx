@@ -1,7 +1,7 @@
 import client from '../src/apollo/client'
 import Layout from '../src/components/layout'
 import { GET_PAGE } from '../src/queries/pages/get-page'
-import { handleRedirectsAndReturnData } from '../src/utils/slugs'
+import { handleRedirectsAndReturnData } from '../src/utils/slug'
 
 export default function Home({ data }) {
 	return <Layout data={data}>content</Layout>

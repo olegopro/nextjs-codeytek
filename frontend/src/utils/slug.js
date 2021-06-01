@@ -1,5 +1,8 @@
 import { isEmpty } from 'lodash'
 
+export const FALLBACK = 'blocking'
+export const PAGES_COUNT = 10
+
 export const isCustomPageUri = uri => {
 	const pagesToExclude = ['/']
 
