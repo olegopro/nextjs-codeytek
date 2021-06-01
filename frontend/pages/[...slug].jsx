@@ -3,17 +3,17 @@ import { GET_PAGES_URI } from '../src/queries/pages/get-pages'
 import { isEmpty } from 'lodash'
 import { GET_PAGE } from '../src/queries/pages/get-page'
 import { useRouter } from 'next/router'
+import Layout from '../src/components/layout'
+import { isCustomPageUri } from '../src/utils/slugs'
 
 const Pages = ({ data }) => {
-	console.log(data)
-
 	const router = useRouter()
 	if (router.isFallback) {
 		return <div>Loading...</div>
 	}
 
 	// @ts-ignore
-	return router?.query?.slug.join('/')
+	return <Layout data={data}>{router?.query?.slug.join('/')}</Layout>
 }
 
 export default Pages
@@ -51,7 +51,7 @@ export async function getStaticPaths() {
 
 	data?.pages?.nodes &&
 		data?.pages?.nodes.map(page => {
-			if (!isEmpty(page?.uri)) {
+			if (!isEmpty(page?.uri) && !isCustomPageUri(page?.uri)) {
 				const slugs = page?.uri?.split('/').filter(pageSlug => pageSlug)
 				pathsData.push({ params: { slug: slugs } })
 			}
