@@ -7,10 +7,10 @@ import Footer from './footer'
 import Header from './header'
 
 const Layout = ({ data, isPost, children }) => {
-	const { page, post, header, footer, headerMenus, footerMenus } = data || {}
+	const { page, post, posts, header, footer, headerMenus, footerMenus } = data || {}
 
 	// If it does not have either post or page.
-	if (isEmpty(page) && isEmpty(post)) {
+	if (isEmpty(page) && isEmpty(post) && isEmpty(posts)) {
 		return null
 	}
 
