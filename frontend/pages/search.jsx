@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import client from '../src/apollo/client'
 import Footer from '../src/components/layout/footer'
 import Header from '../src/components/layout/header'
@@ -7,10 +8,22 @@ import { handleRedirectsAndReturnData } from '../src/utils/slug'
 
 export default function Search({ data }) {
 	const { header, footer, headerMenus, footerMenus, slug } = data || {}
+	const [searchQuery, setSearchQuery] = useState('')
+
+	const handleSearchFormSubmit = event => {
+		event.preventDefault()
+
+		return null
+	}
+
 	return (
 		<>
 			<Header header={header} headerMenus={headerMenus?.edges ?? []} slug={slug} />
-			<SearchBox />
+			<SearchBox
+				searchQuery={searchQuery}
+				setSearchQuery={setSearchQuery}
+				handleSearchFormSubmit={handleSearchFormSubmit}
+			/>
 			<Footer footer={footer} footerMenus={footerMenus?.edges} />
 		</>
 	)
