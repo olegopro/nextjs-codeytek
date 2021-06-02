@@ -1,10 +1,11 @@
 import { useEffect, useState } from 'react'
-import Posts from '../blog/posts'
-import { PER_PAGE_FIRST } from '../../utils/pagination'
 import { useLazyQuery } from '@apollo/client'
-import { GET_LOAD_MORE_NEWS } from '../../queries/news/get-load-mode-news'
 import PropTypes from 'prop-types'
 import { isEmpty } from 'lodash'
+
+import Posts from '../blog/posts'
+import { PER_PAGE_FIRST } from '../../utils/pagination'
+import { GET_LOAD_MORE_NEWS } from '../../queries/news/get-load-more-news'
 
 const LoadMorePosts = ({ posts, classes, graphQLQuery, searchQuery }) => {
 	/**
@@ -13,11 +14,14 @@ const LoadMorePosts = ({ posts, classes, graphQLQuery, searchQuery }) => {
 	 * it sever side posts can be fetched, and the new endcursor( contained in pageInfo )
 	 * can be sent to get the next set of posts.
 	 */
-	const [postsData, setPostsData] = useState(posts?.edges)
+	const [postsData, setPostsData] = useState(posts?.edges ?? [])
 	const [pageInfo, setPageInfo] = useState(posts?.pageInfo)
 
 	const [error, setError] = useState(null)
 
+	/**
+	 * If value of 'posts' passed to this component changes, set new post data and page info.
+	 */
 	useEffect(() => {
 		setPostsData(posts?.edges)
 		setPageInfo(posts?.pageInfo)
@@ -74,6 +78,7 @@ const LoadMorePosts = ({ posts, classes, graphQLQuery, searchQuery }) => {
 			after: endCursor
 		}
 
+		// If its a search query then add the query in the query variables.
 		if (!isEmpty(searchQuery)) {
 			queryVariables.query = searchQuery
 		}
@@ -100,7 +105,7 @@ const LoadMorePosts = ({ posts, classes, graphQLQuery, searchQuery }) => {
 						<div className="flex justify-center w-full border border-white px-3 py-2 my-8">Loading...</div>
 					) : (
 						<button
-							className="flex items-center bg-gray-100 hover:bg-gray-600 hover:text-white transition-colors duration-500 border border-gray-500 px-4 py-3"
+							className="flex items-center cursor-pointer	bg-gray-100 hover:bg-gray-600 hover:text-white transition-colors duration-500 border border-gray-500 px-4 py-3"
 							onClick={() => loadMoreItems(endCursor)}
 						>
 							Load more
@@ -116,14 +121,14 @@ const LoadMorePosts = ({ posts, classes, graphQLQuery, searchQuery }) => {
 LoadMorePosts.propTypes = {
 	posts: PropTypes.object,
 	classes: PropTypes.string,
-	graphQLQUery: PropTypes.object,
+	graphQLQuery: PropTypes.object,
 	searchQuery: PropTypes.string
 }
 
 LoadMorePosts.defaultProps = {
 	posts: {},
 	classes: '',
-	graphQLQUery: GET_LOAD_MORE_NEWS,
+	graphQLQuery: GET_LOAD_MORE_NEWS,
 	searchQuery: ''
 }
 

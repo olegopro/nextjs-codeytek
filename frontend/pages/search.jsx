@@ -1,6 +1,7 @@
 import { useLazyQuery } from '@apollo/client'
 import { isEmpty } from 'lodash'
-import { useState } from 'react'
+import Router from 'next/router'
+import { useEffect, useState } from 'react'
 import client from '../src/apollo/client'
 import ErrorMessage from '../src/components/error'
 import Footer from '../src/components/layout/footer'
@@ -16,8 +17,9 @@ import { handleRedirectsAndReturnData } from '../src/utils/slug'
 
 export default function Search({ data }) {
 	const { header, footer, headerMenus, footerMenus, slug } = data || {}
-	const [searchQuery, setSearchQuery] = useState('')
-	const [searchError, setSearchError] = useState()
+	const searchQueryString = process.browser ? Router?.query?.s : ''
+	const [searchQuery, setSearchQuery] = useState(searchQueryString)
+	const [searchError, setSearchError] = useState('')
 	const [queryResultPosts, setQueryResultPosts] = useState({})
 	const [showResultInfo, setShowResultInfo] = useState(false)
 
@@ -50,6 +52,19 @@ export default function Search({ data }) {
 			}
 		})
 	}
+
+	useEffect(() => {
+		if (searchQueryString) {
+			setSearchQuery(searchQueryString)
+			fetchPosts({
+				variables: {
+					first: PER_PAGE_FIRST,
+					after: null,
+					query: searchQuery
+				}
+			})
+		}
+	}, [searchQueryString])
 
 	const totalPostResultCount = queryResultPosts?.pageInfo?.offsetPagination?.total
 
