@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import Image from '../../image'
-import { sanitize } from '../../../utils/DOMPurify'
+import { sanitize } from '../../../utils/miscellaneous.js'
 
 const Post = ({ post }) => {
 	return (

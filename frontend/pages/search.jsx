@@ -1,14 +1,16 @@
-// @ts-nocheck
 import { useLazyQuery } from '@apollo/client'
 import { isEmpty } from 'lodash'
 import { useState } from 'react'
 import client from '../src/apollo/client'
+import ErrorMessage from '../src/components/error'
 import Footer from '../src/components/layout/footer'
 import Header from '../src/components/layout/header'
+import Loading from '../src/components/loading'
 import LoadMorePosts from '../src/components/news/load-more-posts'
+import ResultInfo from '../src/components/search/result-info'
 import SearchBox from '../src/components/search/search-box'
 import { GET_MENUS } from '../src/queries/get-menus'
-import { GET_SEARCH_RESULTS_WITH_TOTAL_PAGES } from '../src/queries/search/get-search-results'
+import { GET_SEARCH_RESULTS, GET_SEARCH_RESULTS_WITH_TOTAL_PAGES } from '../src/queries/search/get-search-results'
 import { PER_PAGE_FIRST } from '../src/utils/pagination'
 import { handleRedirectsAndReturnData } from '../src/utils/slug'
 
@@ -49,6 +51,8 @@ export default function Search({ data }) {
 		})
 	}
 
+	const totalPostResultCount = queryResultPosts?.pageInfo?.offsetPagination?.total
+
 	return (
 		<>
 			<Header header={header} headerMenus={headerMenus?.edges ?? []} slug={slug} />
@@ -57,6 +61,9 @@ export default function Search({ data }) {
 				setSearchQuery={setSearchQuery}
 				handleSearchFormSubmit={handleSearchFormSubmit}
 			/>
+			<ResultInfo showResultInfo={showResultInfo} totalPostResultCount={totalPostResultCount} />
+			<ErrorMessage text={searchError} classes={'max-w-xl mx-auto -mt-8'} />
+			<Loading visible={loading} showSpinner classes="mx-auto text-center -mt-8" />
 			<LoadMorePosts
 				classes="md:container px-5 py-12 mx-auto min-h-almost-screen"
 				posts={queryResultPosts}

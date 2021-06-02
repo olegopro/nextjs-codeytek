@@ -1,7 +1,7 @@
 import { isEmpty } from 'lodash'
 import Head from 'next/head'
 import PropTypes from 'prop-types'
-import { sanitize } from '../../utils/DOMPurify'
+import { sanitize } from '../../utils/miscellaneous.js'
 import Seo from '../seo'
 import Footer from './footer'
 import Header from './header'

@@ -5,7 +5,7 @@ import Layout from '../../src/components/layout'
 import { FALLBACK, handleRedirectsAndReturnData } from '../../src/utils/slug'
 import { GET_POST } from '../../src/queries/posts/get-post'
 import { GET_POST_SLUGS } from '../../src/queries/posts/get-posts'
-import { sanitize } from '../../src/utils/DOMPurify'
+import { sanitize } from '../../src/utils/miscellaneous.js'
 
 const Post = ({ data }) => {
 	const router = useRouter()

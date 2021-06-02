@@ -3,7 +3,7 @@ import { GET_PAGE_BY_ID } from '../../../src/queries/pages/get-page'
 import Layout from '../../../src/components/layout'
 import { handleRedirectsAndReturnData } from '../../../src/utils/slug'
 import { getAuthToken } from '../../../src/utils/cookies'
-import { sanitize } from '../../../src/utils/DOMPurify'
+import { sanitize } from '../../../src/utils/miscellaneous.js'
 import { getLoginPreviewRedirectUrl } from '../../../src/utils/redirects'
 
 const PagePreview = ({ data }) => {

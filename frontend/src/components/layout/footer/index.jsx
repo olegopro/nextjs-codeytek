@@ -1,6 +1,6 @@
 import { isEmpty, isArray } from 'lodash'
 import Link from 'next/link'
-import { sanitize } from '../../../utils/DOMPurify'
+import { sanitize } from '../../../utils/miscellaneous.js'
 import { getIconComponentByName } from '../../../utils/icons-map'
 
 const Footer = ({ footer, footerMenus }) => {

@@ -2,7 +2,7 @@ import client from '../../../src/apollo/client'
 import Layout from '../../../src/components/layout'
 import { GET_POST_BY_ID } from '../../../src/queries/posts/get-posts'
 import { getAuthToken } from '../../../src/utils/cookies'
-import { sanitize } from '../../../src/utils/DOMPurify'
+import { sanitize } from '../../../src/utils/miscellaneous.js'
 import { getLoginPreviewRedirectUrl } from '../../../src/utils/redirects'
 import { handleRedirectsAndReturnData } from '../../../src/utils/slug'
 
