@@ -1,10 +1,12 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Posts from '../blog/posts'
 import { PER_PAGE_FIRST } from '../../utils/pagination'
 import { useLazyQuery } from '@apollo/client'
 import { GET_LOAD_MORE_NEWS } from '../../queries/news/get-load-mode-news'
+import PropTypes from 'prop-types'
+import { isEmpty } from 'lodash'
 
-const LoadMorePosts = ({ posts }) => {
+const LoadMorePosts = ({ posts, classes, graphQLQuery, searchQuery }) => {
 	/**
 	 * First set the posts data and pageInfo received from server side,
 	 * as initial postsData and pageInfo, so that
@@ -15,6 +17,11 @@ const LoadMorePosts = ({ posts }) => {
 	const [pageInfo, setPageInfo] = useState(posts?.pageInfo)
 
 	const [error, setError] = useState(null)
+
+	useEffect(() => {
+		setPostsData(posts?.edges)
+		setPageInfo(posts?.pageInfo)
+	}, [posts?.edges])
 
 	/**
 	 * Set posts.
@@ -39,7 +46,7 @@ const LoadMorePosts = ({ posts }) => {
 		setPageInfo({ ...posts?.pageInfo })
 	}
 
-	const [fetchPosts, { loading }] = useLazyQuery(GET_LOAD_MORE_NEWS, {
+	const [fetchPosts, { loading }] = useLazyQuery(graphQLQuery, {
 		notifyOnNetworkStatusChange: true,
 		onCompleted: data => {
 			/**
@@ -62,11 +69,17 @@ const LoadMorePosts = ({ posts }) => {
 	 * @param {String} endCursor Endcursor used to fetch the next set of posts.
 	 */
 	const loadMoreItems = (endCursor = null) => {
+		let queryVariables = {
+			first: PER_PAGE_FIRST,
+			after: endCursor
+		}
+
+		if (!isEmpty(searchQuery)) {
+			queryVariables.query = searchQuery
+		}
+
 		fetchPosts({
-			variables: {
-				first: PER_PAGE_FIRST,
-				after: endCursor
-			}
+			variables: queryVariables
 		})
 	}
 
@@ -79,7 +92,7 @@ const LoadMorePosts = ({ posts }) => {
 	const { endCursor, hasNextPage } = pageInfo || {}
 
 	return (
-		<>
+		<div className={classes}>
 			<Posts posts={postsData} />
 			{hasNextPage ? (
 				<div className="w-full flex justify-center lg:my-10">
@@ -96,8 +109,22 @@ const LoadMorePosts = ({ posts }) => {
 				</div>
 			) : null}
 			{error && <div className="w-full flex justify-center my-10">No articles available</div>}
-		</>
+		</div>
 	)
+}
+
+LoadMorePosts.propTypes = {
+	posts: PropTypes.object,
+	classes: PropTypes.string,
+	graphQLQUery: PropTypes.object,
+	searchQuery: PropTypes.string
+}
+
+LoadMorePosts.defaultProps = {
+	posts: {},
+	classes: '',
+	graphQLQUery: GET_LOAD_MORE_NEWS,
+	searchQuery: ''
 }
 
 export default LoadMorePosts
