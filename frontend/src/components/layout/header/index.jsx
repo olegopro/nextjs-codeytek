@@ -1,7 +1,7 @@
 import Nav from './nav'
 import { isEmpty } from 'lodash'
 
-const Header = ({ header, headerMenus }) => {
+const Header = ({ header, headerMenus, slug = null }) => {
 	if (isEmpty(headerMenus)) {
 		return null
 	}
