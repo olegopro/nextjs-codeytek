@@ -1,6 +1,7 @@
 import { isEmpty } from 'lodash'
 import Link from 'next/link'
 import { useState } from 'react'
+import { isCustomPageUri } from '../../../utils/slug'
 
 const Nav = ({ header, headerMenus }) => {
 	if (isEmpty(headerMenus)) {
@@ -48,22 +49,34 @@ const Nav = ({ header, headerMenus }) => {
 			>
 				{headerMenus?.length ? (
 					<div className="text-sm lg:flex-grow">
-						{headerMenus?.map(menu => (
-							<Link key={menu?.node?.id} href={menu?.node?.path}>
-								<a
-									data-cy="nav-item"
-									className="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4"
-								>
-									{menu?.node?.label}
-								</a>
-							</Link>
-						))}
+						{headerMenus?.map(menu => {
+							if (!isCustomPageUri(menu?.node?.path)) {
+								return (
+									<Link key={menu?.node?.id} href={menu?.node?.path}>
+										<a
+											data-cy="nav-item"
+											className="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4"
+										>
+											{menu?.node?.label}
+										</a>
+									</Link>
+								)
+							}
+						})}
 						<Link href={'/blog/'}>
 							<a
 								className="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4"
 								data-cy="nav-item"
 							>
 								Blog
+							</a>
+						</Link>
+						<Link href={'/news/'}>
+							<a
+								className="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4"
+								data-cy="nav-item"
+							>
+								News
 							</a>
 						</Link>
 					</div>
